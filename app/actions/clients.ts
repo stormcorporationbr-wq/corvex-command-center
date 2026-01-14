@@ -27,8 +27,8 @@ export async function createClient(data: CreateClientData) {
     const { data: existingClient } = await supabase
         .from('clients')
         .select('id')
-        .eq('slug', data.slug)
-        .single();
+        .eq('slug' as any, data.slug)
+        .maybeSingle();
 
     if (existingClient) {
         return { success: false, error: 'Slug already exists' };
@@ -38,8 +38,8 @@ export async function createClient(data: CreateClientData) {
     const { data: existingEmail } = await supabase
         .from('clients')
         .select('id')
-        .eq('email', data.email)
-        .single();
+        .eq('email' as any, data.email)
+        .maybeSingle();
 
     if (existingEmail) {
         return { success: false, error: 'Email already registered' };
@@ -48,9 +48,13 @@ export async function createClient(data: CreateClientData) {
     const { data: newClient, error } = await supabase
         .from('clients')
         .insert([{
-            ...data,
-            status: 'active', // Default to active
-            // Clean up empty strings to null
+            name: data.name,
+            slug: data.slug,
+            email: data.email,
+            country: data.country,
+            tier: data.tier,
+            billing_type: data.billing_type,
+            status: 'active' as any,
             phone: data.phone || null,
             website: data.website || null,
             industry: data.industry || null,
@@ -58,7 +62,7 @@ export async function createClient(data: CreateClientData) {
             contact_name: data.contact_name || null,
             contact_email: data.contact_email || null,
             notes: data.notes || null,
-        }])
+        }] as any)
         .select()
         .single();
 
@@ -79,8 +83,8 @@ export async function toggleClientStatus(clientId: string, currentStatus: 'activ
 
     const { error } = await supabase
         .from('clients')
-        .update({ status: newStatus })
-        .eq('id', clientId);
+        .update({ status: newStatus } as any)
+        .eq('id' as any, clientId);
 
     if (error) {
         throw new Error('Failed to update client status');
@@ -97,7 +101,7 @@ export async function deleteClient(clientId: string) {
     const { error } = await supabase
         .from('clients')
         .delete()
-        .eq('id', clientId);
+        .eq('id' as any, clientId);
 
     if (error) {
         throw new Error('Failed to delete client');
