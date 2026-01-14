@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import Inter font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-bg text-text-main font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+
+  /* Glassmorphism effect */
+  .glass {
+    @apply bg-bg-surface/60 backdrop-blur-glass border border-border;
+  }
+
+  /* Glass with glow - Enhanced for floating elements */
+  .glass-glow {
+    @apply glass shadow-glass;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+  }
+
+  /* Active navigation item */
+  .nav-active {
+    @apply text-primary bg-primary/10 border-l-2 border-primary;
+  }
+
+  /* Hover effect for interactive elements */
+  .hover-glow {
+    @apply transition-all duration-300 hover:shadow-glow hover:border-primary/50;
+  }
+}
+
+@layer utilities {
+
+  /* Custom scrollbar */
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-bg-surface;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary/50;
+  }
+
+  /* Animated gradient text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary via-text-main to-primary bg-clip-text text-transparent;
+    background-size: 200% auto;
+    animation: gradient-flow 3s linear infinite;
+  }
+
+  /* Floating animation */
+  .float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes gradient-flow {
+    0% {
+      background-position: 0% center;
+    }
+
+    100% {
+      background-position: 200% center;
+    }
+  }
+
+  /* Shimmer effect */
+  .shimmer {
+    background: linear-gradient(90deg, transparent, rgba(160, 233, 255, 0.1), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+
+    100% {
+      background-position: 200% 0;
+    }
+  }
+}
